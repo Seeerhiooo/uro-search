@@ -32,7 +32,7 @@ async function search() {
 
   document.getElementById('results').innerHTML = '<p>Searching...</p>';
 
-  const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+  const response = await fetch(`/api/?q=${encodeURIComponent(query)}`);
   const data = await response.json();
 
   if (!data || data.length === 0) {
