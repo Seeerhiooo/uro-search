@@ -13,18 +13,17 @@ def get_embedding(text):
         'Content-Type': 'application/json'
     })
     with urllib.request.urlopen(req) as response:
-        return json.loads(response.read())[0]
+        result = response.read()
+        return json.loads(result)[0]
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         from urllib.parse import urlparse, parse_qs
         parsed = urlparse(self.path)
         query = parse_qs(parsed.query).get('q', [''])[0]
-
         if not query:
             self._respond(200, [])
             return
-
         try:
             embedding = get_embedding(query)
             pc = Pinecone(api_key=os.environ['PINECONE_API_KEY'])
