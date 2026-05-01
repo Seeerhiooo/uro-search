@@ -6,7 +6,7 @@ import urllib.request
 
 def get_embedding(text):
     hf_token = os.environ.get('HF_TOKEN', '')
-    url = "https://api-inference.huggingface.co/pipeline/feature-extraction/intfloat/multilingual-e5-large"
+    url = "https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/v1/feature-extraction"
     data = json.dumps({"inputs": f"query: {text}"}).encode()
     req = urllib.request.Request(url, data=data, headers={
         'Authorization': f'Bearer {hf_token}',
