@@ -12,9 +12,13 @@ def get_embedding(text):
         'Authorization': f'Bearer {hf_token}',
         'Content-Type': 'application/json'
     })
-    with urllib.request.urlopen(req) as response:
-        result = response.read()
-        return json.loads(result)[0]
+    try:
+        with urllib.request.urlopen(req) as response:
+            result = response.read()
+            return json.loads(result)[0]
+    except urllib.error.HTTPError as e:
+        body = e.read().decode()
+        raise Exception(f"HF Error {e.code}: {body}")
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
